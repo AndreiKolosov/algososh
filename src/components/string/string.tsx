@@ -56,7 +56,7 @@ export const StringComponent: React.FC = () => {
         />
       </form>
       <ul className={styles.list}>
-        {animateSteps.length > 1 &&
+        {animateSteps.length >= 1 &&
           animateSteps[currentStep].map((char, i) => (
             <li key={i}>
               <Circle
