@@ -6,7 +6,7 @@ const initialState: IInitialState = {
   inProcess: false,
 };
 
-export const stringSlice = createSlice({
+export const reverseStringSlice = createSlice({
   name: 'string',
   initialState,
   reducers: {
@@ -29,4 +29,4 @@ export const stringSlice = createSlice({
   },
 });
 
-export const { setStringArr, setSortingStatus, setSortedArr, setNewElementStatus } = stringSlice.actions;
+export const { setStringArr, setSortingStatus, setSortedArr, setNewElementStatus } = reverseStringSlice.actions;

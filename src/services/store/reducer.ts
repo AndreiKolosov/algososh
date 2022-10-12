@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import { stringSlice } from '../slices/stringSlice';
+import { fibonacciSlice } from '../slices/fibonacciSlice';
+import { reverseStringSlice } from '../slices/reverseStringSlice';
 
 export const rootReducer = combineReducers({
-  string: stringSlice.reducer,
+  string: reverseStringSlice.reducer,
+  fibonacci: fibonacciSlice.reducer
 });

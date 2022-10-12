@@ -1,67 +1,65 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import styles from './fibonacci-page.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-// import { fibonacciSlice, setFibonacciNumber } from '../../services/slices/fibonacciSlaice';
+import { FIND_FIBONACCI } from '../../services/sagas/actions/fibonacci';
+import { setNumber } from '../../services/slices/fibonacciSlice';
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const FibonacciPage: React.FC = () => {
-  // const dispatch = useAppDispatch();
-  // const { number } = useAppSelector(store => store.fibonacci)
+  const { number, numbersArr, inProcess } = useAppSelector((store) => store.fibonacci);
+  const maxValue = 19;
+  const minValue = 1;
+  const dispatch = useAppDispatch();
+
+  const checkValidity = () => {
+    if(number) {
+      if(number <= 0 || number > 19) return true;
+      return false
+    }
+    return false
+  }
+
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    // dispatch(setFibonacciNumber(Number(e?.target?.value)))
-    // console.log(number)
+    dispatch(setNumber(e.target.value))
   };
 
-
-// const getFibonacci =  async (num: number) => {
-//   let a = 1;
-//   let b = 0;
-//   let temp;
-//   const tempSequence = [];
-
-//   while (num >= 0) {
-//     temp = a;
-//     a += b;
-//     b = temp;
-//     tempSequence.push(b);
-//     await sleep(500)
-//     setArr([...tempSequence]);
-    
-//     num -= 1;
-//   }
-// };
-
-const submitHandler = (e: FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-    
-  };
+  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch({type: FIND_FIBONACCI})  
+    };
 
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
       <form className={styles.form} onSubmit={submitHandler}>
-        <Input type="number" onChange={changeHandler} isLimitText max={19} min={1} />
+        <Input
+          type="number"
+          placeholder='Введите число'
+          onChange={changeHandler}
+          value={number || ''}
+          isLimitText
+          max={maxValue}
+          min={minValue}
+        />
         <Button
           type="submit"
           text="Рассчитать"
-          // disabled={number <= 0 || number > 19}
-          // isLoader={animateSteps.length > 1 && currentStep !== animateSteps.length - 1}
+          disabled={checkValidity()}
+          isLoader={inProcess}
         />
       </form>
       <ul className={styles.list}>
-        {/* {animateSteps.length >= 1 &&
-          animateSteps[currentStep].map((char, i) => (
+        {numbersArr && numbersArr.map((num, i) => (
             <li key={i}>
               <Circle
-                letter={char}
-                state={setCircleState(i, stringChars.length - 1, currentStep, animateSteps.length - 1)}
+                letter={num.toString()}
+                index={i}
               />
             </li>
-          ))} */}
+          ))}
       </ul>
     </SolutionLayout>
   );

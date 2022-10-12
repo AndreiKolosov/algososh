@@ -1,0 +1,39 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { IInitialState } from '../../types/fibonacci';
+
+const initialState: IInitialState = {
+  number: null,
+  numbersArr: [],
+  inProcess: false,
+};
+
+export const fibonacciSlice = createSlice({
+  name: 'fibonacci',
+  initialState,
+  reducers: {
+    setNumber(store, action) {
+      store.number = action.payload
+    },
+    pushNumber(store, action) {
+      const num = action.payload;
+      store.numbersArr = [...store.numbersArr, num];
+    },
+    setCountingStatus(store, action) {
+      store.inProcess = action.payload;
+    },
+    clearArr(store) {
+      store.numbersArr = [];
+    },
+    clearNumber(store) {
+      store.number = null;
+    }
+  },
+});
+
+export const {
+  setNumber,
+  pushNumber,
+  setCountingStatus,
+  clearArr,
+  clearNumber,
+} = fibonacciSlice.actions;
