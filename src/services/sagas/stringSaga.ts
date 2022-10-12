@@ -40,7 +40,6 @@ export function* sortStringWorker(params: TParams) {
       arr = [...currentArr];
       start++;
       end--;
-      console.log(arr, start, end);
     }
     if(start === middle) {
       yield delay(DELAY_IN_MS)
