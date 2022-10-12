@@ -4,9 +4,9 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
-import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import { FIND_FIBONACCI } from '../../services/sagas/actions/fibonacci';
 import { setNumber } from '../../services/slices/fibonacciSlice';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 
 export const FibonacciPage: React.FC = () => {

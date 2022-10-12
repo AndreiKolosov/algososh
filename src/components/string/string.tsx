@@ -4,9 +4,8 @@ import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
 import { Input } from '../ui/input/input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
-import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { ElementStates } from '../../types/element-states';
 import { REVERSE_STRING } from '../../services/sagas/actions/reverseStringActions';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 export const StringComponent: React.FC = () => {
   const [string, setString] = useState<string>(''); 
@@ -37,7 +36,7 @@ export const StringComponent: React.FC = () => {
             <li key={i}>
               <Circle
                 letter={char.value}
-                state={ElementStates[char.status]}
+                state={char.status}
               />
             </li>
           ))}

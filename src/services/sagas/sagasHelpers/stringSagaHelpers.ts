@@ -1,7 +1,7 @@
 import { delay } from 'redux-saga/effects';
 import { DELAY_IN_MS } from '../../../constants/delays';
+import { RootState } from '../../../types';
 import { TChar } from '../../../types/stringReverse.types.';
-import { RootState } from '../../store/store';
 
 export function* swap(array: TChar[], i: number, j: number) {
   let temp = array[i];

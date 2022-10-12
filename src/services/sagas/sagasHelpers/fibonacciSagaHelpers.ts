@@ -1,7 +1,7 @@
 import { put, delay } from 'redux-saga/effects';
 import { SHORT_DELAY_IN_MS } from '../../../constants/delays';
+import { RootState } from '../../../types';
 import { pushNumber } from '../../slices/fibonacciSlice';
-import { RootState } from '../../store/store';
 
 export function* findFibonacci(n: number) {
   let prev = 1;

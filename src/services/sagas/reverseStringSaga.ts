@@ -1,3 +1,4 @@
+import { ElementStates } from './../../types/element-states';
 import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { delay, put, select } from 'redux-saga/effects';
 import { setNewElementStatus, setSortedArr, setSortingStatus, setStringArr } from '../slices/reverseStringSlice';
@@ -14,7 +15,7 @@ export function* reverseStringWorker(params: TParams) {
   let arr = [...currentCharsArr];
 
   if (arr.length === 1) {
-    yield put(setNewElementStatus({ index: 0, status: 'Modified' }));
+    yield put(setNewElementStatus({ index: 0, status: ElementStates.Modified }));
   }
 
   if (arr.length > 1) {
@@ -22,12 +23,12 @@ export function* reverseStringWorker(params: TParams) {
     let end = arr.length - 1;
     const middle = Math.round(end / 2);
     while (start < middle) {
-      yield put(setNewElementStatus({ index: start, status: 'Changing' }));
-      yield put(setNewElementStatus({ index: end, status: 'Changing' }));
+      yield put(setNewElementStatus({ index: start, status: ElementStates.Changing }));
+      yield put(setNewElementStatus({ index: end, status: ElementStates.Changing }));
       yield swap(arr, start, end);
       yield put(setSortedArr(arr));
-      yield put(setNewElementStatus({ index: start, status: 'Modified' }));
-      yield put(setNewElementStatus({ index: end, status: 'Modified' }));
+      yield put(setNewElementStatus({ index: start, status: ElementStates.Modified }));
+      yield put(setNewElementStatus({ index: end, status: ElementStates.Modified }));
       const currentArr: TChar[] = yield select(getArr);
       arr = [...currentArr];
       start++;
@@ -35,7 +36,7 @@ export function* reverseStringWorker(params: TParams) {
     }
     if(start === middle) {
       yield delay(DELAY_IN_MS)
-      yield put(setNewElementStatus({ index: middle, status: 'Modified' }));
+      yield put(setNewElementStatus({ index: middle, status: ElementStates.Modified }));
     }
   }
 

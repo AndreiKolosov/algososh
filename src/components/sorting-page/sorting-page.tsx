@@ -4,10 +4,10 @@ import { Button } from '../ui/button/button';
 import { Column } from '../ui/column/column';
 import { RadioInput } from '../ui/radio-input/radio-input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
-import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import { START_SORTING_ASCENDING, START_SORTING_DESCENDING } from '../../services/sagas/actions/sortingActions';
 import { createArrayForSort, setSortMethod } from '../../services/slices/sortingSlice';
 import { SortDirection, SortMethods } from '../../types/sorting.types';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 export const SortingPage: React.FC = () => {
   const { inProcess, arrForSort, sortMethod, sortDirection } = useAppSelector((store) => store.sorting)

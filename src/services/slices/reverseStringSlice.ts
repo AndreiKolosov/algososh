@@ -1,3 +1,4 @@
+import { ElementStates } from './../../types/element-states';
 import { createSlice } from '@reduxjs/toolkit';
 import { IInitialState } from '../../types/stringReverse.types.';
 
@@ -14,7 +15,7 @@ export const reverseStringSlice = createSlice({
       store.inProcess = action.payload;
     },
     setStringArr(store, action) {
-      const charsArr = action.payload.map((el: string, i: number) => ({ value: el, index: i, status: 'Default' }));
+      const charsArr = action.payload.map((el: string, i: number) => ({ value: el, index: i, status: ElementStates.Default }));
       store.stringArr = charsArr;
     },
     setSortedArr(store, action) {
