@@ -1,8 +1,9 @@
 import { all, takeEvery } from 'redux-saga/effects';
-import { sortStringWorker } from './stringSaga';
+import { REVERSE_STRING } from './actions/reverseStringActions';
+import { reverseStringWorker } from './reverseStringSaga';
 
 export function* rootSaga() {
   yield all([
-     takeEvery('SORT_STRING', sortStringWorker),
+     takeEvery(REVERSE_STRING, reverseStringWorker),
   ]);
 }

@@ -1,15 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-export type TChar = {
-  value: string;
-  index: string;
-  status: 'Changing' | 'Modified' | 'Default'
-}
-
-interface IInitialState {
-  stringArr: TChar[];
-  inProcess: boolean;
-}
+import { IInitialState } from '../../types/stringReverse';
 
 const initialState: IInitialState = {
   stringArr: [],

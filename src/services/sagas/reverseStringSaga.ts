@@ -1,20 +1,12 @@
 import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { delay, put, select } from 'redux-saga/effects';
-import { RootState } from '../store/store';
-import { setNewElementStatus, setSortedArr, setSortingStatus, setStringArr, TChar } from '../slices/stringSlice';
+import { setNewElementStatus, setSortedArr, setSortingStatus, setStringArr } from '../slices/stringSlice';
+import { TChar, TParams } from '../../types/stringReverse';
+import { getArr, swap } from './sagasHelpers/stringSagaHelpers';
 
-type TParams = { stringChars: string[]; type: string };
 
-const getArr = (store: RootState) => store.string.stringArr;
 
-function* swap(array: TChar[], i: number, j: number) {
-  let temp = array[i];
-  array[i] = array[j];
-  array[j] = temp;
-  yield delay(DELAY_IN_MS);
-}
-
-export function* sortStringWorker(params: TParams) {
+export function* reverseStringWorker(params: TParams) {
   yield put(setSortingStatus(true))
   yield put(setStringArr(params.stringChars));
   yield delay(SHORT_DELAY_IN_MS)
