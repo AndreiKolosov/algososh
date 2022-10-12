@@ -1,7 +1,7 @@
 import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { delay, put, select } from 'redux-saga/effects';
 import { setNewElementStatus, setSortedArr, setSortingStatus, setStringArr } from '../slices/reverseStringSlice';
-import { TChar, TParams } from '../../types/stringReverse';
+import { TChar, TParams } from '../../types/stringReverse.types.';
 import { getArr, swap } from './sagasHelpers/stringSagaHelpers';
 
 

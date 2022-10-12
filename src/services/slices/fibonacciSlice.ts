@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IInitialState } from '../../types/fibonacci';
+import { IInitialState } from '../../types/fibonacci.types';
 
 const initialState: IInitialState = {
   number: null,

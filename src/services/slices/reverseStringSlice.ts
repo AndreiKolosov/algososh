@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IInitialState } from '../../types/stringReverse';
+import { IInitialState } from '../../types/stringReverse.types.';
 
 const initialState: IInitialState = {
   stringArr: [],
