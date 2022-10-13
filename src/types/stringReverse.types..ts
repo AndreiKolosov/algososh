@@ -4,7 +4,7 @@ export type TParams = { stringChars: string[]; type: string };
 
 export type TChar = {
   value: string;
-  index: string;
+  index: number;
   status: ElementStates;
 };
 

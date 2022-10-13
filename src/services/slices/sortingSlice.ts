@@ -1,7 +1,6 @@
 import { ElementStates } from './../../types/element-states';
-import { createSlice } from '@reduxjs/toolkit';
-import { IInitialState, SortDirection, SortMethods } from '../../types/sorting.types';
-import { TAction } from '../../types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IInitialState, SortDirection, SortMethods, TArrElement } from '../../types/sorting.types';
 
 const initialState: IInitialState = {
   sortDirection: SortDirection.Ascending,
@@ -17,10 +16,10 @@ export const sortingSlice = createSlice({
     setSortMethod(store, action) {
       store.sortMethod = action.payload;
     },
-    setSortDirection(store, action: TAction<SortDirection>) {
+    setSortDirection(store, action: PayloadAction<SortDirection>) {
       store.sortDirection = action.payload;
     },
-    createArrayForSort(store, action: TAction<{ min: number, max: number }>) {
+    createArrayForSort(store, action: PayloadAction<{ min: number; max: number }>) {
       const min = action.payload.min;
       const max = action.payload.max;
       const randomLen = Math.floor(Math.random() * (max - min)) + min;
@@ -28,10 +27,27 @@ export const sortingSlice = createSlice({
       const randomArray = randomNumArray.map((el: number) => ({ value: el, status: ElementStates.Default }));
       store.arrForSort = randomArray;
     },
-    setSortingStatus(store, action) {
+    setSortingStatus(store, action: PayloadAction<boolean>) {
       store.inProcess = action.payload;
     },
+    setNewArr(store, action: PayloadAction<TArrElement[]>) {
+      store.arrForSort = action.payload;
+    },
+    setNewItemStatus(store, action: PayloadAction<{index: number, status: ElementStates}>) {
+      store.arrForSort[action.payload.index].status = action.payload.status
+    },
+    resetElementsStatuses(store) {
+      store.arrForSort.map((el) => el.status = ElementStates.Default)
+    }
   },
 });
 
-export const { setSortMethod, setSortDirection, createArrayForSort, setSortingStatus } = sortingSlice.actions;
+export const {
+  setSortMethod,
+  setSortDirection,
+  createArrayForSort,
+  setSortingStatus,
+  setNewArr,
+  setNewItemStatus,
+  resetElementsStatuses,
+} = sortingSlice.actions;

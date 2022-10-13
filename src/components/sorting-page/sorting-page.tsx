@@ -21,11 +21,11 @@ export const SortingPage: React.FC = () => {
   }
 
   const startAscendingSort = () => {
-    dispatch({ type: START_SORTING_ASCENDING, params: '' })
+    dispatch({ type: START_SORTING_ASCENDING })
   };
 
   const startDescendingSort = () => {
-    dispatch({ type: START_SORTING_DESCENDING, params: '' });
+    dispatch({ type: START_SORTING_DESCENDING });
   };
 
   return (

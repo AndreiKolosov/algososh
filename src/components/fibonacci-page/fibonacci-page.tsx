@@ -24,7 +24,7 @@ export const FibonacciPage: React.FC = () => {
   }
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setNumber(e.target.value))
+    dispatch(setNumber(Number(e.target.value)));
   };
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {

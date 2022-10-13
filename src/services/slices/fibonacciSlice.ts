@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IInitialState } from '../../types/fibonacci.types';
 
 const initialState: IInitialState = {
@@ -11,14 +11,14 @@ export const fibonacciSlice = createSlice({
   name: 'fibonacci',
   initialState,
   reducers: {
-    setNumber(store, action) {
+    setNumber(store, action: PayloadAction<number>) {
       store.number = action.payload
     },
-    pushNumber(store, action) {
+    pushNumber(store, action: PayloadAction<number>) {
       const num = action.payload;
       store.numbersArr = [...store.numbersArr, num];
     },
-    setCountingStatus(store, action) {
+    setCountingStatus(store, action: PayloadAction<boolean>) {
       store.inProcess = action.payload;
     },
     clearArr(store) {
