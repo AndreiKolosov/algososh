@@ -4,8 +4,8 @@ import { Button } from '../ui/button/button';
 import { Column } from '../ui/column/column';
 import { RadioInput } from '../ui/radio-input/radio-input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
-import { START_SORTING_ASCENDING, START_SORTING_DESCENDING } from '../../services/sagas/actions/sortingActions';
-import { createArrayForSort, setSortMethod } from '../../services/slices/sortingSlice';
+import { START_SORTING } from '../../services/sagas/actions/sortingActions';
+import { createArrayForSort, setSortDirection, setSortMethod } from '../../services/slices/sortingSlice';
 import { SortDirection, SortMethods } from '../../types/sorting.types';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
@@ -19,13 +19,14 @@ export const SortingPage: React.FC = () => {
     const value = e.target.value;
     dispatch(setSortMethod(value))
   }
-
   const startAscendingSort = () => {
-    dispatch({ type: START_SORTING_ASCENDING })
+    dispatch(setSortDirection(SortDirection.Ascending))
+    dispatch({ type: START_SORTING })
   };
 
   const startDescendingSort = () => {
-    dispatch({ type: START_SORTING_DESCENDING });
+    dispatch(setSortDirection(SortDirection.Descending));
+    dispatch({ type: START_SORTING });
   };
 
   return (
