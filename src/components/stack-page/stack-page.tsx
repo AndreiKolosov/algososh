@@ -30,6 +30,7 @@ const handleRemove = () => {
 
 const handleClear = () => {
   dispatch(clear());
+  setValue('');
 }
 
   return (
@@ -44,7 +45,7 @@ const handleClear = () => {
           disabled={stack.length >= 6}
         />
         <Button type="button" text="Добавить" onClick={handleAdd} disabled={inProcess || stack.length >= 6} />
-        <Button type="button" text="Удалить" onClick={handleRemove} disabled={inProcess} />
+        <Button type="button" text="Удалить" onClick={handleRemove} disabled={inProcess} extraClass={styles.controls__removeBtn}/>
         <Button type="button" text="Очистить" onClick={handleClear} disabled={inProcess} />
       </div>
       <ul className={styles.list}>
