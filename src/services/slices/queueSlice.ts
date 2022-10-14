@@ -16,10 +16,10 @@ export const queueSlice = createSlice({
   name: 'queue',
   initialState,
   reducers: {
-    initQueue(store, action: PayloadAction<{ queue: TQueueItem[], size: number }>) {
-      store.queue = Array(action.payload.size)
-      store.queue = [...action.payload.queue]
-      store.queueSize = action.payload.size
+    initQueue(store, action: PayloadAction<{ queue: TQueueItem[]; size: number }>) {
+      store.queue = Array(action.payload.size);
+      store.queue = [...action.payload.queue];
+      store.queueSize = action.payload.size;
     },
     enqueue(store, action: PayloadAction<TQueueItem>) {
       if (store.queueLength >= store.queueSize) {
@@ -32,6 +32,12 @@ export const queueSlice = createSlice({
         store.queueHead = 0;
       }
       store.queue[store.queueTail] = action.payload;
+      store.queue[store.queueSize - 1].tail = false;
+      if (store.queueHead !== store.queueTail && store.queueTail !== 0) {
+        store.queue[store.queueTail].tail = true;
+        store.queue[store.queueTail - 1].tail = false;
+      }
+
       store.queueTail += 1;
       store.queueLength += 1;
     },
@@ -39,25 +45,37 @@ export const queueSlice = createSlice({
       if (store.queueLength === 0) {
         throw new Error('No elements in the queue');
       }
-      if (store.queueTail >= store.queueSize) {
-        store.queueTail = 0;
-      }
       if (store.queueHead >= store.queueSize) {
+        store.queue[store.queueHead] = defaultQueueItem;
         store.queueHead = 0;
-      }
-      store.queue[store.queueHead] = defaultQueueItem;
-      store.queueHead += 1;
-      store.queueLength--;
+        store.queue[store.queueHead].head = true;
+      } 
+        store.queue[store.queueHead] = defaultQueueItem;
+        store.queueHead += 1;
+        store.queueLength--;
+        if (store.queueLength !== 0) {
+          store.queue[store.queueHead].head = true;
+        }
     },
-    clearQueue(store, action: PayloadAction<{ queue: TQueueItem[], size: number }>) {
+    clearQueue(store, action: PayloadAction<{ queue: TQueueItem[]; size: number }>) {
       store.queue = Array(action.payload.size);
       store.queue = [...action.payload.queue];
-      store.queueSize = action.payload.size
+      store.queueSize = action.payload.size;
       store.queueLength = 0;
       store.queueHead = 0;
       store.queueTail = 0;
     },
+    setInProcess(store, action: PayloadAction<boolean>) {
+      store.inProcess = action.payload;
+    },
+
+    setItemStateToDefault(store, action: PayloadAction<number>) {
+      store.queue[action.payload].state = ElementStates.Default;
+    },
+    setItemStateToChanging(store, action: PayloadAction<number>) {
+      store.queue[action.payload].state = ElementStates.Changing;
+    },
   },
 });
 
-export const { initQueue, enqueue, dequeue } = queueSlice.actions;
+export const { initQueue, enqueue, dequeue, setInProcess, setItemStateToChanging, setItemStateToDefault } = queueSlice.actions;

@@ -14,27 +14,27 @@ export const QueuePage: React.FC = () => {
 const [value, setValue] = useState<string>('');
 const queueSize = 6;
 const maxInputValueLength = 4;
-const { queue } = useAppSelector((store) => store.queue);
+const { queue, queueHead, queueTail, queueLength, inProcess } = useAppSelector((store) => store.queue);
 const dispatch = useAppDispatch();
+
+const queueItem = {
+ value,
+ index: queueTail,
+ head: queueHead === queueTail  || false,
+ tail: true,
+ state: ElementStates.Changing,
+};
 
 const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
   setValue(e.target?.value);
 };
- const queueItem = {
-  value: '2',
-  head: true,
-  tail: true,
-  state: ElementStates.Changing,
-};
 
 const handleAdd = () => {
-  // dispatch({ type: ADD_TO_STACK, value });
   dispatch({ type: ENQUEUE, item: queueItem })
   setValue('');
 };
 
 const handleRemove = () => {
-  // dispatch({ type: REMOVE_FROM_STACK });
   dispatch({ type: DEQUEUE })
   setValue('');
 };
@@ -63,7 +63,7 @@ useEffect(() => {
           type="button"
           text="Добавить"
           onClick={handleAdd}
-          // disabled={inProcess || stack.length >= 6}
+          disabled={inProcess || queueLength === queueSize}
         />
         <Button
           type="button"

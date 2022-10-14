@@ -4,6 +4,7 @@ export type TQueueSagaParams = { item: TQueueItem; type: string };
 
 export type TQueueItem = {
   value: string;
+  index: number;
   head: boolean;
   tail: boolean;
   state: ElementStates;
