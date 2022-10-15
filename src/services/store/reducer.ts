@@ -1,3 +1,4 @@
+import { linkedListSlice } from './../slices/linkedListSlice';
 import { stackSlice } from './../slices/stackSlice';
 import { sortingSlice } from './../slices/sortingSlice';
 import { combineReducers } from 'redux';
@@ -10,5 +11,6 @@ export const rootReducer = combineReducers({
   fibonacci: fibonacciSlice.reducer,
   sorting: sortingSlice.reducer,
   stack: stackSlice.reducer,
-  queue: queueSlice.reducer
+  queue: queueSlice.reducer,
+  linkedList: linkedListSlice.reducer,
 });
