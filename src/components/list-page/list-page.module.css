@@ -1,0 +1,12 @@
+.controls {
+  grid-area: form;
+  max-width: 952px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 38px 0;
+}
+
+.list {
+  grid-area: visual;
+}
