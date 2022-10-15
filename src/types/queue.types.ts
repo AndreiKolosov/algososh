@@ -1,6 +1,6 @@
 import { ElementStates } from './element-states';
 
-export type TQueueSagaParams = { item: TQueueItem; type: string };
+export type TQueueSagaParams = { value: string; type: string };
 
 export type TQueueItem = {
   value: string;

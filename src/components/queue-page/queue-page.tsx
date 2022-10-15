@@ -7,30 +7,22 @@ import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { Circle } from '../ui/circle/circle';
 import { ElementStates } from '../../types/element-states';
 import { createQueue } from '../../utils/utils';
-import { initQueue } from '../../services/slices/queueSlice';
+import { clearQueue, initQueue } from '../../services/slices/queueSlice';
 import { DEQUEUE, ENQUEUE } from '../../services/sagas/actions/queueActions';
 
 export const QueuePage: React.FC = () => {
 const [value, setValue] = useState<string>('');
 const queueSize = 6;
 const maxInputValueLength = 4;
-const { queue, queueHead, queueTail, queueLength, inProcess } = useAppSelector((store) => store.queue);
+const { queue, queueLength, inProcess } = useAppSelector((store) => store.queue);
 const dispatch = useAppDispatch();
-
-const queueItem = {
- value,
- index: queueTail,
- head: queueHead === queueTail  || false,
- tail: true,
- state: ElementStates.Changing,
-};
 
 const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
   setValue(e.target?.value);
 };
 
 const handleAdd = () => {
-  dispatch({ type: ENQUEUE, item: queueItem })
+  dispatch({ type: ENQUEUE, value })
   setValue('');
 };
 
@@ -40,13 +32,13 @@ const handleRemove = () => {
 };
 
 const handleClear = () => {
-  dispatch(initQueue({ queue: createQueue(queueSize), size: queueSize }));
+  dispatch(clearQueue());
   setValue('');
 };
 
 useEffect(() => {
-  dispatch(initQueue({queue: createQueue(queueSize), size: queueSize}))
-}, [dispatch])
+  dispatch(initQueue({queue: createQueue(queueSize), size: queueSize}));
+}, [dispatch, queue.length])
 
   return (
     <SolutionLayout title="Очередь">
@@ -57,29 +49,28 @@ useEffect(() => {
           value={value}
           onChange={handleInputChange}
           placeholder="Введите текст"
-          // disabled={stack.length >= 6}
+          disabled={queueLength === queueSize}
         />
         <Button
           type="button"
           text="Добавить"
           onClick={handleAdd}
-          disabled={inProcess || queueLength === queueSize}
+          disabled={!value || inProcess || queueLength === queueSize}
         />
         <Button
           type="button"
           text="Удалить"
           onClick={handleRemove}
-          // disabled={inProcess}
-          // extraClass={styles.controls__removeBtn}
+          disabled={inProcess || queueLength === 0}
         />
         <Button
           type="button"
           text="Очистить"
           onClick={handleClear}
-          // disabled={inProcess}
+          disabled={inProcess || queueLength === 0}
         />
       </div>
-      
+
       <ul className={styles.list}>
         {queue.map((item, index) => (
           <li key={index}>

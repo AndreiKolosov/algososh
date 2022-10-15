@@ -6,21 +6,22 @@ import { getHead, getSize, getTail } from './sagasHelpers/queueSagaHelpers';
 
 export function* enqueueSageWorker(params: TQueueSagaParams) {
   yield put(setInProcess(true));
-  // const tail: number = yield select(getTail);
-  // const size: number = yield select(getSize);
-  // yield put(setItemStateToChanging(tail))
-  // yield delay(SHORT_DELAY_IN_MS)
-  yield put(enqueue(params.item));
-  // yield delay(SHORT_DELAY_IN_MS);
-  // yield put(setItemStateToDefault(tail))
+  const tail: number = yield select(getTail);
+  const size: number = yield select(getSize);
+  if (tail !== size) yield put(setItemStateToChanging(tail));
+  yield delay(SHORT_DELAY_IN_MS)
+  yield put(enqueue(params.value));
+  yield delay(SHORT_DELAY_IN_MS);
+  if (tail !== size) yield put(setItemStateToDefault(tail))
   yield put(setInProcess(false));
 }
 
 export function* dequeueSageWorker() {
   yield put(setInProcess(true));
-  // const head: number = yield select(getHead);
-  // yield put(setItemStateToChanging(head))
-  // yield delay(SHORT_DELAY_IN_MS)
+  const head: number = yield select(getHead);
+  const size: number = yield select(getSize);
+  if (head !== size) yield put(setItemStateToChanging(head));
+  yield delay(SHORT_DELAY_IN_MS)
   yield put(dequeue())
   yield put(setInProcess(false));
 }
