@@ -9,8 +9,6 @@ import { delay } from '../../utils/utils';
 import { ElementStates } from '../../types/element-states';
 import { TNumberElement } from '../../types/fibonacci.types';
 
-
-
 export const FibonacciPage: React.FC = () => {
   const [number, setNumber] = useState<number>(1);
   const [inProcess, setInProcess] = useState<boolean>(false);

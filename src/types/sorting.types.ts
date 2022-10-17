@@ -2,6 +2,11 @@
 
 import { ElementStates } from './element-states';
 
+export type TArrayElement = {
+  value: number;
+  state: ElementStates;
+};
+// ===================================s
 export type TArrElement = {
   value: number;
   status: ElementStates;
