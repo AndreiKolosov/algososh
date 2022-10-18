@@ -77,6 +77,7 @@ const renderStack = () => {
     const stackTemp = stack;
     stackTemp.clear();
     setStack(stackTemp);
+    renderStack();
     setInProcess((state) => ({ ...state, isRemoving: false }));
   }
 
