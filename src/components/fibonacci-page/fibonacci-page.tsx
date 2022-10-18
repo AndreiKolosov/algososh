@@ -26,7 +26,7 @@ export const FibonacciPage: React.FC = () => {
     );
 
   const getFibonacci = async (n: number) => {
-    let arr: TNumberElement[] = [];
+    const arr: TNumberElement[] = [];
     let prev = 1;
     let next = 1;
     for (let i = 0; i < n; i++) {

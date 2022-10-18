@@ -20,8 +20,25 @@ export const StackPage: React.FC = () => {
   const stackInstance = new Stack<TStackElement>();
   const [value, setValue] = useState<string>('');
   const [stack, setStack] = useState<Stack<TStackElement>>(stackInstance);
+  const [stackToRender, setStackToRender] = useState<JSX.Element[]>([]);
   const [inProcess, setInProcess] = useState<TProcess>({ isAdding: false, isRemoving: false});
   const maxInputValueLength = 4;
+
+const renderStack = () => {
+  const stackTemp = stack.getElements();
+  
+  const elements = stackTemp.map((item, index) => (
+    <li key={index}>
+      <Circle
+        state={item.state}
+        letter={item.value || ''}
+        index={index}
+        head={stack.getSize() - 1 === index ? 'top' : ''}
+      />
+    </li>
+  ));
+  setStackToRender(elements);
+};
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target?.value as string);
@@ -34,9 +51,11 @@ export const StackPage: React.FC = () => {
     stackTemp.push({ value: inputValue, state: ElementStates.Changing });
     setValue('');
     setStack(stackTemp);
+    renderStack();
     await delay(SHORT_DELAY_IN_MS);
     const stackPeak = stackTemp.peak();
     if(stackPeak) stackPeak.state = ElementStates.Default;
+    renderStack();
     setInProcess((state) => ({ ...state, isAdding: false }));
   }
 
@@ -45,9 +64,11 @@ export const StackPage: React.FC = () => {
     const stackTemp = stack;
     const stackPeak = stackTemp.peak();
     if (stackPeak) stackPeak.state = ElementStates.Changing;
+    renderStack();
     await delay(SHORT_DELAY_IN_MS);
     stackTemp.pop();
     setStack(stackTemp);
+    renderStack();
     setInProcess((state) => ({ ...state, isRemoving: false }));
   }
 
@@ -93,16 +114,7 @@ export const StackPage: React.FC = () => {
         />
       </div>
       <ul className={styles.list}>
-        {stack.getElements().map((item, index) => (
-          <li key={index}>
-            <Circle
-              state={item.state}
-              letter={item.value || ''}
-              index={index}
-              head={stack.getSize() - 1 === index  ? 'top' : ''}
-            />
-          </li>
-        ))}
+        {stackToRender}
       </ul>
     </SolutionLayout>
   );

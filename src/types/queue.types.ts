@@ -1,5 +1,12 @@
 import { ElementStates } from './element-states';
 
+export type TQueueElement = {
+  value: string;
+  state: ElementStates;
+};
+
+export type TProcess = { isAdding: boolean; isRemoving: boolean };
+
 export type TQueueSagaParams = { value: string; type: string };
 
 export type TQueueItem = {
