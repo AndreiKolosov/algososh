@@ -37,28 +37,28 @@ export const ValueControlPanel: React.FC<TValueControlProps> = ({ setValue, valu
         extraClass={styles.panel__btn}
         onClick={handlers.handleAddToHead}
         isLoader={processState.isAddingToHead}
-        disabled={!value}
+        disabled={!value || processState.isAddingToTail}
       />
       <Button
         text="Добавить в tail"
         extraClass={styles.panel__btn}
         onClick={handlers.handleAddToTail}
         isLoader={processState.isAddingToTail}
-        disabled={!value}
+        disabled={!value || processState.isAddingToHead}
       />
       <Button
         text="Удалить из head"
         extraClass={styles.panel__btn}
         onClick={handlers.handleRemoveFromHead}
-        isLoader={processState.isRemovingFormHead}
-        disabled={isEmpty}
+        isLoader={processState.isRemovingFormHead && !processState.isRemovingByIndex}
+        disabled={isEmpty || processState.isRemovingFormTail}
       />
       <Button
         text="Удалить из tail"
         extraClass={styles.panel__btn}
         onClick={handlers.handleRemoveFromTail}
-        isLoader={processState.isRemovingFormTail}
-        disabled={isEmpty}
+        isLoader={processState.isRemovingFormTail && !processState.isRemovingByIndex}
+        disabled={isEmpty || processState.isRemovingFormHead}
       />
     </div>
   );

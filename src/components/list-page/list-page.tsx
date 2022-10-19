@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactElement, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from './list-page.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { ValueControlPanel } from './components/value-control-panel/value-control-panel';
@@ -8,7 +8,7 @@ import { Circle } from '../ui/circle/circle';
 import { ElementStates } from '../../types/element-states';
 import { LinkedList } from '../../utils/linked-list';
 import { delay } from '../../utils/utils';
-import { SHORT_DELAY_IN_MS } from '../../constants/delays';
+import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { TInProcess, TListElement } from '../../types/linkedList.types';
 
 export const createInitialElements = (min: number, max: number): TListElement[] => {
@@ -26,6 +26,10 @@ export const createInitialElements = (min: number, max: number): TListElement[] 
   randomArray[0].head = 'head';
   
   return randomArray;
+}
+
+const setDefaultElementStates = (arr: TListElement[]) => {
+  arr.map((el) => (el.state = ElementStates.Default));
 }
 
 const defaultProcessStat: TInProcess = {
@@ -52,7 +56,6 @@ export const ListPage: React.FC = () => {
       <li key={index}>
         <Circle
           letter={elm.value}
-          // head={index === 0 ? 'head' : elm.head}
           head={elm.head}
           tail={elm.tail}
           state={elm.state}
@@ -65,12 +68,6 @@ export const ListPage: React.FC = () => {
     setListToRender(elements);
   }
 
-  const modifyElement = (arr: TListElement[], value: string, index: number, position: 'tail' | 'head'): void => {
-    const element = arr[index];
-    if(position === 'head') element.head = <Circle isSmall letter={value} state={ElementStates.Changing} />;
-    if(position === 'tail') element.tail = <Circle isSmall letter={value} state={ElementStates.Changing} />;
-  } 
-  
   const handleAddToHead = async() => {
     setInProcess((state) => ({ ...state, isAddingToHead: true }));
     const value = inputValue;
@@ -170,15 +167,94 @@ export const ListPage: React.FC = () => {
 
   const handleAddByIndex = async () => {
     setInProcess((state) => ({ ...state, isAddingByIndex: true }));
-    await delay(SHORT_DELAY_IN_MS);
-
+    const index = Number(inputIndex);
+    const value = inputValue;
+    const listTemp = linkedList;
+    let currIndex = 0;
+    if(index > listTemp.getSize() - 1) {
+      setInputIndex('Неверный индекс!');
+      await delay(DELAY_IN_MS);
+      setInputIndex('');
+    } else if (index === 0) {
+      await handleAddToHead();
+    } else {
+      while (currIndex < index) {
+        if (listTemp.getValues()[currIndex - 1]) {
+          listTemp.getValues()[currIndex - 1].head = '';
+          if (currIndex - 1 === 0) listTemp.getValues()[currIndex - 1].head = 'head';
+        }
+        listTemp.getValues()[currIndex].head = <Circle isSmall letter={value} state={ElementStates.Changing} />;
+        listTemp.getValues()[currIndex].state = ElementStates.Changing
+        setLinkedList(listTemp);
+        await delay(DELAY_IN_MS);
+        renderList();
+        currIndex++;
+      }
+      setDefaultElementStates(listTemp.getValues());
+      linkedList.addByIndex({
+        value: value,
+        state: ElementStates.Modified,
+        head: '',
+        tail: '',
+        extraClass: true,
+      }, index);
+      setInputIndex('');
+      setInputValue('');
+      listTemp.getValues()[index - 1].head = '';
+      setLinkedList(listTemp);
+      await delay(DELAY_IN_MS);
+      renderList();
+      listTemp.getValues()[index].state = ElementStates.Default;
+      setLinkedList(listTemp);
+      await delay(DELAY_IN_MS);
+      renderList();
+    }
     setInProcess((state) => ({ ...state, isAddingByIndex: false }));
   }
 
   const handleRemoveByIndex = async () => {
     setInProcess((state) => ({ ...state, isRemovingByIndex: true }));
-    await delay(SHORT_DELAY_IN_MS);
-
+    const index = Number(inputIndex);
+    const listTemp = linkedList;
+    const lastIndex = listTemp.getSize() - 1
+    let currIndex = 0;
+    if (index > lastIndex) {
+      setInputIndex('Неверный индекс!');
+      await delay(DELAY_IN_MS);
+      setInputIndex('');
+    } else if (index === 0) {
+      await handleRemoveFromHead();
+      setInputIndex('');
+    } else if (index === lastIndex) {
+      await handleRemoveFromTail();
+      setInputIndex('');
+    } else {
+      while (currIndex < index) {
+        const element = listTemp.getValues()[currIndex];
+        const prevElement = listTemp.getValues()[currIndex - 1];
+        if (prevElement) listTemp.getValues()[currIndex - 1].tail = '';
+        element.tail = <Circle isSmall letter={element.value} state={ElementStates.Changing} />;
+        element.state = ElementStates.Changing;
+        setLinkedList(listTemp);
+        await delay(SHORT_DELAY_IN_MS);
+        renderList();
+        currIndex++;
+      }
+      const currElement = listTemp.getValues()[index];
+      currElement.tail = <Circle isSmall letter={currElement.value} state={ElementStates.Changing} />;
+      currElement.value = '';
+      listTemp.getValues()[index - 1].tail = '';
+      setLinkedList(listTemp);
+      await delay(SHORT_DELAY_IN_MS);
+      renderList();
+      setDefaultElementStates(listTemp.getValues())
+      listTemp.deleteByIndex(index)
+      setInputIndex('');
+      setInputValue('');
+      setLinkedList(listTemp);
+      await delay(DELAY_IN_MS);
+      renderList();
+    }
     setInProcess((state) => ({ ...state, isRemovingByIndex: false }));
   };
 
@@ -197,7 +273,8 @@ export const ListPage: React.FC = () => {
         />
         <IndexControlPanel
           setValue={setInputIndex}
-          value={inputIndex}
+          index={inputIndex}
+          isAddDisabled={!inputValue}
           processState={inProcess}
           handlers={{ handleAddByIndex, handleRemoveByIndex }}
         />

@@ -7,15 +7,16 @@ import { TInProcess } from '../../../../types/linkedList.types';
 export type TIndexControlProps = {
   extraClass?: string;
   setValue: Dispatch<SetStateAction<string>>;
-  value: string;
+  index: string;
   processState: TInProcess;
+  isAddDisabled: boolean;
   handlers: {
     handleAddByIndex: () => void;
     handleRemoveByIndex: () => void;
   };
 };
 
-export const IndexControlPanel: React.FC<TIndexControlProps> = ({ setValue, value, processState, handlers, extraClass = '', ...props }) => {
+export const IndexControlPanel: React.FC<TIndexControlProps> = ({ setValue, index, isAddDisabled, processState, handlers, extraClass = '', ...props }) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target?.value);
@@ -27,17 +28,19 @@ export const IndexControlPanel: React.FC<TIndexControlProps> = ({ setValue, valu
         extraClass={styles.panel__input}
         placeholder="Введите индекс"
         onChange={handleInputChange}
-        value={value}
+        value={index}
       />
       <Button
         extraClass={styles.panel__btn}
         text="Добавить по индексу"
         onClick={handlers.handleAddByIndex}
+        disabled={!index || isAddDisabled || processState.isRemovingByIndex}
         isLoader={processState.isAddingByIndex}
       />
       <Button
         extraClass={styles.panel__btn}
         text="Удалить по индексу"
+        disabled={!index || processState.isAddingByIndex}
         onClick={handlers.handleRemoveByIndex}
         isLoader={processState.isRemovingByIndex}
       />
