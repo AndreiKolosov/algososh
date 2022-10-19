@@ -19,6 +19,8 @@ export const ValueControlPanel: React.FC<TValueControlProps> = ({
         value={value}
         disabled={disabledAdd}
         placeholder="Введите значение"
+        isLimitText
+        maxLength={4}
       />
       <Button
         text="Добавить в head"
