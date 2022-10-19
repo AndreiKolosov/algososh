@@ -22,9 +22,22 @@ interface ILinkedList<T> {
 export class LinkedList<T> implements ILinkedList<T> {
   private head: ListNode<T> | null;
   private size: number;
-  constructor() {
+  constructor(array?: T[]) {
+    if (array) {
+      const length = array.length;
+      let curr = new ListNode<T>(array[length - 1]);
+      let temp;
+
+      for (let i = length - 2; i >= 0; i--) {
+        temp = new ListNode(array[i], curr);
+        curr = temp;
+      }
+      this.head = curr;
+      this.size = length;
+    } else {
       this.head = null;
       this.size = 0;
+    }
   }
 
   append = (item: T) => {

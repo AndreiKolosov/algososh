@@ -23,7 +23,6 @@ export const QueuePage: React.FC = () => {
   const renderQueue = () => {
     const arr = [];
     const queueTemp = queue.getElements();
-    console.log(queueTemp);
     
     for(let i = 0; i < queueSize; i++) {
       if (queueTemp[i]) {

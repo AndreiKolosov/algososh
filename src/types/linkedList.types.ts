@@ -1,19 +1,19 @@
+import { ReactElement } from 'react';
 import { ElementStates } from './element-states';
 
-export type TListItem = {
+export type TListElement = {
   value: string;
-  index: number;
   state: ElementStates;
+  head: string | ReactElement;
+  tail: string | ReactElement;
   extraClass: boolean;
-  extraClassModifier: ElementStates;
-  head: string;
-  tail: boolean;
 };
 
-export interface IInitialState {
-  linkedList: TListItem[];
-  listHead: number;
-  listTail: number;
-  listLength: number;
-  inProcess: boolean;
-}
+export type TInProcess = {
+  isAddingToTail: boolean;
+  isAddingToHead: boolean;
+  isAddingByIndex: boolean;
+  isRemovingFormTail: boolean;
+  isRemovingFormHead: boolean;
+  isRemovingByIndex: boolean;
+};
