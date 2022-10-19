@@ -1,15 +1,17 @@
 import { ElementStates } from './element-states';
 
-export type TStackSagaParams = { value: string; type: string };
+export interface IStack<T> {
+  push: (item: T) => void;
+  pop: () => void;
+  clear: () => void;
+  peak: () => T | null;
+  getElements: () => T[];
+  getSize: () => number;
+}
 
 export type TStackElement = {
-  value: string,
-  state: ElementStates
-  index: number
-}
+  value: string;
+  state: ElementStates;
+};
 
-export interface IInitialState {
-  stack: TStackElement[];
-  peak: TStackElement | null;
-  inProcess: boolean;
-}
+export type TProcess = { isAdding: boolean; isRemoving: boolean };

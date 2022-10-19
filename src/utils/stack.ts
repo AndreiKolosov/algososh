@@ -1,11 +1,4 @@
-interface IStack<T> {
-  push: (item: T) => void;
-  pop: () => void;
-  clear: () => void;
-  peak: () => T | null;
-  getElements: () => T[];
-  getSize: () => number;
-}
+import { IStack } from '../types/stack.types';
 
 export class Stack<T> implements IStack<T> {
   private container: T[] = [];

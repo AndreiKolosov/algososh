@@ -8,13 +8,7 @@ import { Stack } from '../../utils/stack';
 import { ElementStates } from '../../types/element-states';
 import { delay } from '../../utils/utils';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
-
-export type TStackElement = {
-  value: string;
-  state: ElementStates;
-};
-
-export type TProcess = { isAdding: boolean, isRemoving: boolean}
+import { TProcess, TStackElement } from '../../types/stack.types';
 
 export const StackPage: React.FC = () => {
   const stackInstance = new Stack<TStackElement>();

@@ -16,10 +16,6 @@
   gap: 0 56px;
 }
 
-/* .circle_default {
-  position: relative;
-} */
-
 .circle_default::after {
   position: absolute;
   content: '';

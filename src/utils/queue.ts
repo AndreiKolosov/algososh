@@ -1,16 +1,4 @@
-interface IQueue<T> {
-  init: (arr: T[]) => void;
-  enqueue: (item: T) => void;
-  dequeue: () => void;
-  peak: () => T | null;
-  getElements: () => (T | null)[];
-  getSize: () => number;
-  getLength: () => number;
-  getHead: () => number;
-  getTail: () => number;
-  clear: () => void;
-  isEmpty: () => boolean;
-}
+import { IQueue } from '../types/queue.types';
 
 export class Queue<T> implements IQueue<T> {
   private container: (T | null)[] = [];

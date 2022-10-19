@@ -1,3 +1,5 @@
+import { ILinkedList } from '../types/linkedList.types';
+
 export class ListNode<T> {
   value: T;
   next: ListNode<T> | null;
@@ -5,18 +7,6 @@ export class ListNode<T> {
     this.value = value;
     this.next = next === undefined ? null : next;
   }
-}
-
-interface ILinkedList<T> {
-  prepend: (item: T) => void;
-  append: (item: T) => void;
-  addByIndex: (item: T, index: number) => void;
-  deleteByIndex: (index: number) => void;
-  deleteHead: () => void;
-  deleteTail: () => void;
-  getValues: () => T[];
-  getSize: () => number;
-  getHead: () => ListNode<T> | null;
 }
 
 export class LinkedList<T> implements ILinkedList<T> {

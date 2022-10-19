@@ -10,36 +10,7 @@ import { LinkedList } from '../../utils/linked-list';
 import { delay } from '../../utils/utils';
 import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { TInProcess, TListElement } from '../../types/linkedList.types';
-
-export const createInitialElements = (min: number, max: number): TListElement[] => {
-  const randomLen = Math.floor(Math.random() * (max - min)) + min;
-  const randomNumArray = Array.from({ length: randomLen }, () => Math.floor(Math.random() * 100));
-  const randomArray = randomNumArray.map((el: number) => ({
-    value: String(el),
-    state: ElementStates.Default,
-    head: '',
-    tail: '',
-    extraClass: true,
-  }));
-  randomArray[randomArray.length - 1].extraClass = false;
-  randomArray[randomArray.length - 1].tail = 'tail';
-  randomArray[0].head = 'head';
-  
-  return randomArray;
-}
-
-const setDefaultElementStates = (arr: TListElement[]) => {
-  arr.map((el) => (el.state = ElementStates.Default));
-}
-
-const defaultProcessStat: TInProcess = {
-  isAddingToTail: false,
-  isAddingToHead: false,
-  isAddingByIndex: false,
-  isRemovingFormTail: false,
-  isRemovingFormHead: false,
-  isRemovingByIndex: false,
-}
+import { createInitialElements, defaultProcessStat, setDefaultElementStates } from './helpers';
 
 export const ListPage: React.FC = () => {
   const listInstance = new LinkedList<TListElement>(createInitialElements(3, 5));
@@ -267,6 +238,7 @@ export const ListPage: React.FC = () => {
         <ValueControlPanel
           setValue={setInputValue}
           value={inputValue}
+          disabledAdd={linkedList.getSize() === 10}
           processState={inProcess}
           isEmpty={!linkedList.getHead()}
           handlers={{ handleAddToHead, handleAddToTail, handleRemoveFromHead, handleRemoveFromTail }}

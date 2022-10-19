@@ -15,21 +15,3 @@ export const createArray = (min: number, max: number) => {
   return randomArray;
 }
 // =========================================================
-export const defaultQueueItem = {
-  value: '',
-  index: 0,
-  head: false,
-  tail: false,
-  state: ElementStates.Default,
-};
-
-export const createQueue = (size: number) => {
-  const arr = [];
-  let i = 0;
-
-  while (i < size) {
-    arr.push(defaultQueueItem);
-    i += 1;
-  }
-  return arr;
-}

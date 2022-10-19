@@ -7,21 +7,16 @@ export type TQueueElement = {
 
 export type TProcess = { isAdding: boolean; isRemoving: boolean };
 
-export type TQueueSagaParams = { value: string; type: string };
-
-export type TQueueItem = {
-  value: string;
-  index: number;
-  head: boolean;
-  tail: boolean;
-  state: ElementStates;
-};
-
-export interface IInitialState {
-  queue: TQueueItem[];
-  queueHead: number;
-  queueTail: number;
-  queueLength: number;
-  queueSize: number;
-  inProcess: boolean;
+export interface IQueue<T> {
+  init: (arr: T[]) => void;
+  enqueue: (item: T) => void;
+  dequeue: () => void;
+  peak: () => T | null;
+  getElements: () => (T | null)[];
+  getSize: () => number;
+  getLength: () => number;
+  getHead: () => number;
+  getTail: () => number;
+  clear: () => void;
+  isEmpty: () => boolean;
 }
