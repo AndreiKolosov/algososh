@@ -1,0 +1,15 @@
+.panel {
+  width: 100%;
+  display: flex;
+  gap: 0 12px;
+}
+
+.panel__input {
+  max-width: 204px;
+  width: 100%;
+}
+
+.panel__btn {
+  max-width: 175px;
+  width: 100%;
+}

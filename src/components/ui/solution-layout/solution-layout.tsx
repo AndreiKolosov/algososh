@@ -32,7 +32,9 @@ export const SolutionLayout: React.FC<SolutionLayoutProps> = ({
         <h3 className={`text text_type_h3 text_color_h3 ${styles.cardTitle}`}>
           {title}
         </h3>
-        {children}
+        <div className={styles.solution}>
+          {children}
+        </div>
       </div>
       <p
         className={`text text_type_column text_color_input mt-14 ${styles.copyright}`}

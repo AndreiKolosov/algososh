@@ -44,3 +44,14 @@
 .link {
   text-decoration: none;
 }
+
+.solution {
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  gap: 48px 0;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+  'form'
+  'visual';
+}

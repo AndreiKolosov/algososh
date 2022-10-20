@@ -1,0 +1,50 @@
+.controls {
+  grid-area: form;
+  max-width: 952px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 38px 0;
+}
+
+.list {
+  grid-area: visual;
+  padding: 72px 0 0 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 0 56px;
+}
+
+.circle_default::after {
+  position: absolute;
+  content: '';
+  mask-image: url("../../images/list-arrow.svg");
+  background-color: var(--default-color);
+  width: 10px;
+  height: 16px;
+  top: calc(50% - 8px);
+  right: -35px
+}
+
+.circle_changing::after {
+  position: absolute;
+  content: '';
+  mask-image: url("../../images/list-arrow.svg");
+  background-color: var(--changing-color);
+  width: 10px;
+  height: 16px;
+  top: calc(50% - 8px);
+  right: -35px
+}
+
+.circle_modified::after {
+  position: absolute;
+  content: '';
+  mask-image: url("../../images/list-arrow.svg");
+  background-color: var(--modified-color);
+  width: 10px;
+  height: 16px;
+  top: calc(50% - 8px);
+  right: -35px
+}
