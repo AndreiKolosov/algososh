@@ -31,6 +31,8 @@ export const QueuePage: React.FC = () => {
         arr.push({ value: '', state: ElementStates.Default });
       }
     }
+    console.log(arr, queue.getTail(), queue.getHead());
+    
     const elements = arr.map((elm, index) => (
       <li key={index}>
         <Circle
@@ -59,7 +61,7 @@ export const QueuePage: React.FC = () => {
     renderQueue()
     await delay(SHORT_DELAY_IN_MS);
     const queueElements = queueTemp.getElements();
-    const queueTailElm = queueElements[queueTemp.getLength() - 1];
+    const queueTailElm = queueElements[queueTemp.getTail() - 1];
     if (queueTailElm) queueTailElm.state = ElementStates.Default;
     setQueue(queueTemp);
     renderQueue();
