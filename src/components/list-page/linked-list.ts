@@ -1,4 +1,4 @@
-import { ILinkedList } from '../types/linkedList.types';
+import { ILinkedList } from '../../types/linkedList.types';
 
 export class LinkedListNode<T> {
   value: T;

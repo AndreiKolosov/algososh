@@ -6,7 +6,7 @@ import { ValueControlPanel } from './components/value-control-panel/value-contro
 import { IndexControlPanel } from './components/index-control-panel/index-control-panel';
 import { Circle } from '../ui/circle/circle';
 import { ElementStates } from '../../types/element-states';
-import { LinkedList } from '../../utils/linked-list';
+import { LinkedList } from './linked-list';
 import { delay } from '../../utils/utils';
 import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { TInProcess, TListElement } from '../../types/linkedList.types';

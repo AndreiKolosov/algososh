@@ -4,7 +4,7 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
-import { Stack } from '../../utils/stack';
+import { Stack } from './stack';
 import { ElementStates } from '../../types/element-states';
 import { delay } from '../../utils/utils';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
@@ -98,19 +98,17 @@ const renderStack = () => {
           text="Удалить"
           onClick={handleRemove}
           isLoader={inProcess.isRemoving}
-          disabled={inProcess.isAdding}
+          disabled={inProcess.isAdding || (!value && stack.getSize() === 0)}
           extraClass={styles.controls__removeBtn}
         />
         <Button
           type="button"
           text="Очистить"
           onClick={handleClear}
-          disabled={inProcess.isAdding || inProcess.isRemoving}
+          disabled={inProcess.isAdding || inProcess.isRemoving || (!value && stack.getSize() === 0)}
         />
       </div>
-      <ul className={styles.list}>
-        {stackToRender}
-      </ul>
+      <ul className={styles.list}>{stackToRender}</ul>
     </SolutionLayout>
   );
 };

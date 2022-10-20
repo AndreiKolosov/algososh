@@ -1,4 +1,4 @@
-import { LinkedListNode } from './../utils/linked-list';
+import { LinkedListNode } from '../components/list-page/linked-list';
 import { Dispatch, ReactElement, SetStateAction } from 'react';
 import { ElementStates } from './element-states';
 

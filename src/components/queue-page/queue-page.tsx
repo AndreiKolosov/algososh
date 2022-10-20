@@ -6,7 +6,7 @@ import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
 import { ElementStates } from '../../types/element-states';
-import { Queue } from '../../utils/queue';
+import { Queue } from './queue';
 import { delay } from '../../utils/utils';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { TProcess, TQueueElement } from '../../types/queue.types';
