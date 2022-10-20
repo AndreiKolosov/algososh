@@ -31,8 +31,6 @@ export const QueuePage: React.FC = () => {
         arr.push({ value: '', state: ElementStates.Default });
       }
     }
-    console.log(arr, queue.getTail(), queue.getHead());
-    
     const elements = arr.map((elm, index) => (
       <li key={index}>
         <Circle

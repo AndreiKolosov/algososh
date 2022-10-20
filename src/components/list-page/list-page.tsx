@@ -53,7 +53,7 @@ export const ListPage: React.FC = () => {
     renderList();
     listTemp.prepend({
       value: value,
-      state: ElementStates.Default,
+      state: ElementStates.Modified,
       head: 'head',
       tail: '',
       extraClass: true,
@@ -64,6 +64,10 @@ export const ListPage: React.FC = () => {
     }
     setInputValue('');
     setLinkedList(listTemp);
+    renderList();
+    listTemp.getValues()[0].state = ElementStates.Default;
+    setLinkedList(listTemp);
+    await delay(SHORT_DELAY_IN_MS);
     renderList();
     setInProcess((state) => ({ ...state, isAddingToHead: false }));
   }
@@ -86,7 +90,7 @@ export const ListPage: React.FC = () => {
     renderList();
     listTemp.append({
       value: value,
-      state: ElementStates.Default,
+      state: ElementStates.Modified,
       head: '',
       tail: 'tail',
       extraClass: false,
@@ -96,6 +100,10 @@ export const ListPage: React.FC = () => {
     }
     setInputValue('');
     setLinkedList(listTemp);
+    renderList();
+    listTemp.getValues()[tailIndex + 1].state = ElementStates.Default;
+    setLinkedList(listTemp);
+    await delay(SHORT_DELAY_IN_MS);
     renderList();
     setInProcess((state) => ({ ...state, isAddingToTail: false }));
   };
@@ -204,7 +212,6 @@ export const ListPage: React.FC = () => {
         const element = listTemp.getValues()[currIndex];
         const prevElement = listTemp.getValues()[currIndex - 1];
         if (prevElement) listTemp.getValues()[currIndex - 1].tail = '';
-        element.tail = <Circle isSmall letter={element.value} state={ElementStates.Changing} />;
         element.state = ElementStates.Changing;
         setLinkedList(listTemp);
         await delay(SHORT_DELAY_IN_MS);
