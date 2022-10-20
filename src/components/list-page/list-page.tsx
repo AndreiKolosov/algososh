@@ -78,12 +78,13 @@ export const ListPage: React.FC = () => {
     const listTemp = linkedList;
     const tailIndex = listTemp.getSize() - 1;
     if (listTemp.getValues()[tailIndex]) {
-      listTemp.getValues()[tailIndex].tail = <Circle isSmall letter={value} state={ElementStates.Changing} />;
+      listTemp.getValues()[tailIndex].head = <Circle isSmall letter={value} state={ElementStates.Changing} />;
     }
     setLinkedList(listTemp);
     renderList();
     await delay(SHORT_DELAY_IN_MS);
     if (listTemp.getValues()[tailIndex]) {
+      listTemp.getValues()[tailIndex].head = '';
       listTemp.getValues()[tailIndex].tail = '';
       listTemp.getValues()[tailIndex].extraClass = true;
     }
@@ -112,7 +113,7 @@ export const ListPage: React.FC = () => {
     setInProcess((state) => ({ ...state, isRemovingFormHead: true }));
     const listTemp = linkedList;
     const prevValue = listTemp.getValues()[0].value;
-    listTemp.getValues()[0].head = <Circle isSmall letter={prevValue} state={ElementStates.Changing} />;
+    listTemp.getValues()[0].tail = <Circle isSmall letter={prevValue} state={ElementStates.Changing} />;
     listTemp.getValues()[0].value = '';
     setLinkedList(listTemp);
     renderList();
@@ -165,7 +166,7 @@ export const ListPage: React.FC = () => {
         listTemp.getValues()[currIndex].head = <Circle isSmall letter={value} state={ElementStates.Changing} />;
         listTemp.getValues()[currIndex].state = ElementStates.Changing;
         setLinkedList(listTemp);
-        await delay(DELAY_IN_MS);
+        await delay(SHORT_DELAY_IN_MS);
         renderList();
         currIndex++;
       }
@@ -184,7 +185,7 @@ export const ListPage: React.FC = () => {
       setInputValue('');
       listTemp.getValues()[index - 1].head = '';
       setLinkedList(listTemp);
-      await delay(DELAY_IN_MS);
+      await delay(SHORT_DELAY_IN_MS);
       renderList();
       listTemp.getValues()[index].state = ElementStates.Default;
       setLinkedList(listTemp);
