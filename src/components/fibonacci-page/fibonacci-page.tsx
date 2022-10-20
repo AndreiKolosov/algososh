@@ -5,42 +5,22 @@ import { Input } from '../ui/input/input';
 import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
-import { delay } from '../../utils/utils';
+import { delay, getFibonacciNumbers } from '../../utils/utils';
 import { ElementStates } from '../../types/element-states';
-import { TNumberElement } from '../../types/fibonacci.types';
 
 export const FibonacciPage: React.FC = () => {
   const [number, setNumber] = useState<number>(1);
   const [inProcess, setInProcess] = useState<boolean>(false);
-  const [fibonacci, setFibonacci] = useState<JSX.Element[]>([]);
+  const [fibonacci, setFibonacci] = useState<number[]>([]);
   const maxValue = 19;
   const minValue = 1;
 
-  const renderFibonacci = (arr: TNumberElement[]) =>
-    setFibonacci(
-      arr.map((el, index) => (
-        <li key={index}>
-          <Circle letter={String(el.value)} state={el.state} tail={String(index)} />
-        </li>
-      )),
-    );
-
-  const getFibonacci = async (n: number) => {
-    const arr: TNumberElement[] = [];
-    let prev = 1;
-    let next = 1;
-    for (let i = 0; i < n; i++) {
+  const renderFibonacci = async (arr: number[]) => {
+    const { length } = arr;
+    for (let i = 0; i < length; i++) {
       await delay(SHORT_DELAY_IN_MS);
-      arr.push({ value: prev, state: ElementStates.Default });
-      renderFibonacci(arr);
-
-      let temp = next;
-      next = prev + next;
-      prev = temp;
+      setFibonacci((state) => ([ ...state, arr[i] ]));
     }
-    await delay(SHORT_DELAY_IN_MS);
-    arr.push({ value: prev, state: ElementStates.Default });
-    renderFibonacci(arr);
   }
 
   const checkValidity = () => {
@@ -58,7 +38,8 @@ export const FibonacciPage: React.FC = () => {
   const submitHandler = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setInProcess(true);
-    await getFibonacci(number);
+    const arr = getFibonacciNumbers(number);
+    await renderFibonacci(arr)
     setInProcess(false);
     };
 
@@ -82,7 +63,11 @@ export const FibonacciPage: React.FC = () => {
         />
       </form>
       <ul className={styles.list}>
-        {fibonacci}
+        {fibonacci.map((number, index) => (
+          <li key={index}>
+          <Circle letter={String(number)} state={ElementStates.Default} tail={String(index)} />
+          </li>
+        ))}
       </ul>
     </SolutionLayout>
   );

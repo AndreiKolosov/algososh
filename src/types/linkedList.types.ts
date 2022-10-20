@@ -1,4 +1,4 @@
-import { ListNode } from './../utils/linked-list';
+import { LinkedListNode } from './../utils/linked-list';
 import { Dispatch, ReactElement, SetStateAction } from 'react';
 import { ElementStates } from './element-states';
 
@@ -55,5 +55,5 @@ export interface ILinkedList<T> {
   deleteTail: () => void;
   getValues: () => T[];
   getSize: () => number;
-  getHead: () => ListNode<T> | null;
+  getHead: () => LinkedListNode<T> | null;
 }

@@ -1,25 +1,25 @@
 import { ILinkedList } from '../types/linkedList.types';
 
-export class ListNode<T> {
+export class LinkedListNode<T> {
   value: T;
-  next: ListNode<T> | null;
-  constructor(value: T, next?: ListNode<T> | null) {
+  next: LinkedListNode<T> | null;
+  constructor(value: T, next?: LinkedListNode<T> | null) {
     this.value = value;
     this.next = next === undefined ? null : next;
   }
 }
 
 export class LinkedList<T> implements ILinkedList<T> {
-  private head: ListNode<T> | null;
+  private head: LinkedListNode<T> | null;
   private size: number;
   constructor(array?: T[]) {
     if (array) {
       const length = array.length;
-      let curr = new ListNode<T>(array[length - 1]);
+      let curr = new LinkedListNode<T>(array[length - 1]);
       let temp;
 
       for (let i = length - 2; i >= 0; i--) {
-        temp = new ListNode(array[i], curr);
+        temp = new LinkedListNode(array[i], curr);
         curr = temp;
       }
       this.head = curr;
@@ -31,7 +31,7 @@ export class LinkedList<T> implements ILinkedList<T> {
   }
 
   append = (item: T) => {
-    const node = new ListNode(item);
+    const node = new LinkedListNode(item);
     let curr;
 
     if (this.head === null) {
@@ -47,7 +47,7 @@ export class LinkedList<T> implements ILinkedList<T> {
   };
 
   prepend = (item: T) => {
-    const node = new ListNode(item);
+    const node = new LinkedListNode(item);
     if (this.head !== null) {
       node.next = this.head;
     }
@@ -59,7 +59,7 @@ export class LinkedList<T> implements ILinkedList<T> {
     if (index < 0 || index > this.size) {
       return;
     } else {
-      const node = new ListNode(item);
+      const node = new LinkedListNode(item);
       if (index === 0) {
         if (this.head !== null) {
           node.next = this.head;
@@ -148,7 +148,7 @@ export class LinkedList<T> implements ILinkedList<T> {
     return this.size;
   };
 
-  getHead = (): ListNode<T> | null => {
+  getHead = (): LinkedListNode<T> | null => {
     return this.head;
   };
 }
