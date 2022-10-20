@@ -77,6 +77,9 @@ export const QueuePage: React.FC = () => {
     queueTemp.dequeue();
     setQueue(queueTemp);
     renderQueue();
+    if(queueTemp.isEmpty()) {
+      queueTemp.clear()
+    }
     setInProcess((state) => ({ ...state, isRemoving: false }));
   };
 
