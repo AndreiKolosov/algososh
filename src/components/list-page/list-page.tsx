@@ -7,10 +7,10 @@ import { IndexControlPanel } from './components/index-control-panel/index-contro
 import { Circle } from '../ui/circle/circle';
 import { ElementStates } from '../../types/element-states';
 import { LinkedList } from './linked-list';
-import { delay } from '../../utils/utils';
+import { delay } from '../../utils';
 import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { TInProcess, TListElement } from '../../types/linkedList.types';
-import { createInitialElements, defaultProcessStat, setDefaultElementStates } from './helpers';
+import { createInitialElements, defaultProcessStat, setDefaultElementStates } from './utils';
 
 export const ListPage: React.FC = () => {
   const listInstance = new LinkedList<TListElement>(createInitialElements(3, 5));

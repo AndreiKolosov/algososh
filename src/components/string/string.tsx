@@ -5,7 +5,7 @@ import { Circle } from '../ui/circle/circle';
 import { Input } from '../ui/input/input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { ElementStates } from '../../types/element-states';
-import { delay, swap } from '../../utils/utils';
+import { delay, swap } from '../../utils';
 import { DELAY_IN_MS } from '../../constants/delays';
 import { TStringChar } from '../../types/string.types';
 import { setCircleState } from './helpers';

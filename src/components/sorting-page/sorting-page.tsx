@@ -6,8 +6,9 @@ import { RadioInput } from '../ui/radio-input/radio-input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { SortDirection, SortMethods, TArrayElement } from '../../types/sorting.types';
 import { ElementStates } from '../../types/element-states';
-import { createArray, delay, swap } from '../../utils/utils';
+import { delay, swap } from '../../utils';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
+import { createArray } from './utils';
 
 export const SortingPage: React.FC = () => {
   const [array, setArray] = useState<TArrayElement[]>([]);

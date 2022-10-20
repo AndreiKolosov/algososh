@@ -6,7 +6,7 @@ import { Button } from '../ui/button/button';
 import { Circle } from '../ui/circle/circle';
 import { Stack } from './stack';
 import { ElementStates } from '../../types/element-states';
-import { delay } from '../../utils/utils';
+import { delay } from '../../utils';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { TProcess, TStackElement } from '../../types/stack.types';
 
