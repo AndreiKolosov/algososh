@@ -15,31 +15,31 @@ export const StackPage: React.FC = () => {
   const [value, setValue] = useState<string>('');
   const [stack, setStack] = useState<Stack<TStackElement>>(stackInstance);
   const [stackToRender, setStackToRender] = useState<JSX.Element[]>([]);
-  const [inProcess, setInProcess] = useState<TProcess>({ isAdding: false, isRemoving: false});
+  const [inProcess, setInProcess] = useState<TProcess>({ isAdding: false, isRemoving: false });
   const maxInputValueLength = 4;
 
-const renderStack = () => {
-  const stackTemp = stack.getElements();
-  
-  const elements = stackTemp.map((item, index) => (
-    <li key={index}>
-      <Circle
-        state={item.state}
-        letter={item.value || ''}
-        index={index}
-        head={stack.getSize() - 1 === index ? 'top' : ''}
-      />
-    </li>
-  ));
-  setStackToRender(elements);
-};
+  const renderStack = () => {
+    const stackTemp = stack.getElements();
+
+    const elements = stackTemp.map((item, index) => (
+      <li key={index}>
+        <Circle
+          state={item.state}
+          letter={item.value || ''}
+          index={index}
+          head={stack.getSize() - 1 === index ? 'top' : ''}
+        />
+      </li>
+    ));
+    setStackToRender(elements);
+  };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target?.value as string);
-  }
+  };
 
-  const handleAdd = async() => {
-    setInProcess((state) => ({...state, isAdding: true}));
+  const handleAdd = async () => {
+    setInProcess((state) => ({ ...state, isAdding: true }));
     const inputValue = value;
     const stackTemp = stack;
     stackTemp.push({ value: inputValue, state: ElementStates.Changing });
@@ -48,12 +48,12 @@ const renderStack = () => {
     renderStack();
     await delay(SHORT_DELAY_IN_MS);
     const stackPeak = stackTemp.peak();
-    if(stackPeak) stackPeak.state = ElementStates.Default;
+    if (stackPeak) stackPeak.state = ElementStates.Default;
     renderStack();
     setInProcess((state) => ({ ...state, isAdding: false }));
-  }
+  };
 
-  const handleRemove = async() => {
+  const handleRemove = async () => {
     setInProcess((state) => ({ ...state, isRemoving: true }));
     const stackTemp = stack;
     const stackPeak = stackTemp.peak();
@@ -64,16 +64,16 @@ const renderStack = () => {
     setStack(stackTemp);
     renderStack();
     setInProcess((state) => ({ ...state, isRemoving: false }));
-  }
+  };
 
-  const handleClear = async() => {
+  const handleClear = async () => {
     setInProcess((state) => ({ ...state, isRemoving: true }));
     const stackTemp = stack;
     stackTemp.clear();
     setStack(stackTemp);
     renderStack();
     setInProcess((state) => ({ ...state, isRemoving: false }));
-  }
+  };
 
   return (
     <SolutionLayout title="Стек">

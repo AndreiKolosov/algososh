@@ -13,7 +13,7 @@ import { TProcess, TQueueElement } from '../../types/queue.types';
 
 export const QueuePage: React.FC = () => {
   const queueSize = 6;
-  const queueInstance = new Queue<TQueueElement>(queueSize)
+  const queueInstance = new Queue<TQueueElement>(queueSize);
   const [queueToRender, setQueueToRender] = useState<JSX.Element[]>([]);
   const [value, setValue] = useState<string>('');
   const [queue, setQueue] = useState<Queue<TQueueElement>>(queueInstance);
@@ -23,8 +23,8 @@ export const QueuePage: React.FC = () => {
   const renderQueue = () => {
     const arr = [];
     const queueTemp = queue.getElements();
-    
-    for(let i = 0; i < queueSize; i++) {
+
+    for (let i = 0; i < queueSize; i++) {
       if (queueTemp[i]) {
         arr.push(queueTemp[i]);
       } else {
@@ -43,20 +43,20 @@ export const QueuePage: React.FC = () => {
       </li>
     ));
     setQueueToRender(elements);
-  }
-  
+  };
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target?.value);
   };
 
-  const handleAdd = async() => {
+  const handleAdd = async () => {
     setInProcess((state) => ({ ...state, isAdding: true }));
     const inputValue = value;
     const queueTemp = queue;
     queue.enqueue({ value: inputValue, state: ElementStates.Changing });
     setValue('');
     setQueue(queueTemp);
-    renderQueue()
+    renderQueue();
     await delay(SHORT_DELAY_IN_MS);
     const queueElements = queueTemp.getElements();
     const queueTailElm = queueElements[queueTemp.getTail() - 1];
@@ -65,8 +65,8 @@ export const QueuePage: React.FC = () => {
     renderQueue();
     setInProcess((state) => ({ ...state, isAdding: false }));
   };
-  
-  const handleRemove = async() => {
+
+  const handleRemove = async () => {
     setInProcess((state) => ({ ...state, isRemoving: true }));
     const queueTemp = queue;
     const headElement = queueTemp.peak();
@@ -79,7 +79,7 @@ export const QueuePage: React.FC = () => {
     renderQueue();
     setInProcess((state) => ({ ...state, isRemoving: false }));
   };
-  
+
   const handleClear = () => {
     setInProcess((state) => ({ ...state, isRemoving: true }));
     const queueTemp = queue;
@@ -90,9 +90,9 @@ export const QueuePage: React.FC = () => {
   };
 
   useEffect(() => {
-    renderQueue()
+    renderQueue();
   }, []);
-  
+
   return (
     <SolutionLayout title="Очередь">
       <div className={styles.controls}>
@@ -126,9 +126,7 @@ export const QueuePage: React.FC = () => {
         />
       </div>
 
-      <ul className={styles.list}>
-        {queueToRender}
-      </ul>
+      <ul className={styles.list}>{queueToRender}</ul>
     </SolutionLayout>
   );
 };

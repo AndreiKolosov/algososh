@@ -12,35 +12,39 @@ import { setCircleState } from './helpers';
 
 export const StringComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
-  const [stringChars, setStringChars] = useState<TStringChar[]>([]); 
+  const [stringChars, setStringChars] = useState<TStringChar[]>([]);
   const [reversedString, setReversedString] = useState<JSX.Element[]>([]);
   const [inProcess, setInProcess] = useState<boolean>(false);
   const stringInputLimit = 11;
 
   const renderString = () =>
-  stringChars &&  setReversedString( 
+    stringChars &&
+    setReversedString(
       stringChars.map((char, index) => (
         <li key={index}>
           <Circle letter={char.value} state={char.state} />
         </li>
-  )));
+      )),
+    );
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    setStringChars(e.target.value.split('').map((value, index) => ({
-      value,
-      index,
-      state: ElementStates.Default 
-    })))    
+    setStringChars(
+      e.target.value.split('').map((value, index) => ({
+        value,
+        index,
+        state: ElementStates.Default,
+      })),
+    );
   };
 
-  const reverseString = async(array: TStringChar[]) => {
+  const reverseString = async (array: TStringChar[]) => {
     const arr = array;
     let start = 0;
     let end = arr.length - 1;
     while (start < end) {
       await delay(DELAY_IN_MS);
-      setCircleState(arr, [start, end], ElementStates.Changing)
+      setCircleState(arr, [start, end], ElementStates.Changing);
       setStringChars(arr);
       renderString();
       await delay(DELAY_IN_MS);
@@ -61,14 +65,14 @@ export const StringComponent: React.FC = () => {
       setStringChars(arr);
       renderString();
     }
-  }
-  
+  };
+
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setInProcess(true);
     setInputValue('');
     renderString();
-    
+
     if (stringChars?.length === 1) {
       await delay(DELAY_IN_MS);
       setCircleState(stringChars, [0], ElementStates.Changing);
@@ -80,7 +84,7 @@ export const StringComponent: React.FC = () => {
       renderString();
     }
     if (stringChars && stringChars?.length > 1) reverseString(stringChars);
-    
+
     setInProcess(false);
   };
 

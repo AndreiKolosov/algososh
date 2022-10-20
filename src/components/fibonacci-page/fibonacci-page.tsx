@@ -19,53 +19,48 @@ export const FibonacciPage: React.FC = () => {
     const { length } = arr;
     for (let i = 0; i < length; i++) {
       await delay(SHORT_DELAY_IN_MS);
-      setFibonacci((state) => ([ ...state, arr[i] ]));
+      setFibonacci((state) => [...state, arr[i]]);
     }
-  }
-
-  const checkValidity = () => {
-    if(number) {
-      if(number <= 0 || number > 19) return true;
-      return false
-    }
-    return false
-  }
-
-  const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-   setNumber(Number(e.target.value))
   };
 
-  const submitHandler = async(e: FormEvent<HTMLFormElement>) => {
+  const checkValidity = () => {
+    if (number) {
+      if (number <= 0 || number > 19) return true;
+      return false;
+    }
+    return false;
+  };
+
+  const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    setNumber(Number(e.target.value));
+  };
+
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setInProcess(true);
     const arr = getFibonacciNumbers(number);
-    await renderFibonacci(arr)
+    await renderFibonacci(arr);
     setInProcess(false);
-    };
+  };
 
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
       <form className={styles.form} onSubmit={submitHandler}>
         <Input
           type="number"
-          placeholder='Введите число'
+          placeholder="Введите число"
           onChange={changeHandler}
           value={number || ''}
           isLimitText
           max={maxValue}
           min={minValue}
         />
-        <Button
-          type="submit"
-          text="Рассчитать"
-          disabled={checkValidity()}
-          isLoader={inProcess}
-        />
+        <Button type="submit" text="Рассчитать" disabled={checkValidity()} isLoader={inProcess} />
       </form>
       <ul className={styles.list}>
         {fibonacci.map((number, index) => (
           <li key={index}>
-          <Circle letter={String(number)} state={ElementStates.Default} tail={String(index)} />
+            <Circle letter={String(number)} state={ElementStates.Default} tail={String(index)} />
           </li>
         ))}
       </ul>

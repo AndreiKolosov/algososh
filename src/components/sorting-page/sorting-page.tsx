@@ -67,7 +67,7 @@ export const SortingPage: React.FC = () => {
       array[array.length - i - 1].state = ElementStates.Modified;
       setArray([...array]);
     }
-  }
+  };
 
   const createNewArr = () => setArray(createArray(minLength, maxLength));
   const radioChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
