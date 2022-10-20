@@ -38,6 +38,7 @@ export const FibonacciPage: React.FC = () => {
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setInProcess(true);
+    setFibonacci([])
     const arr = getFibonacciNumbers(number);
     await renderFibonacci(arr);
     setInProcess(false);
