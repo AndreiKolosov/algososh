@@ -13,7 +13,7 @@ import "./app.css";
 function App() {
   return (
     <div className="app">
-      <BrowserRouter>
+      <BrowserRouter basename='algososh'>
         <Switch>
           <Route path="/" exact>
             <MainPage />
