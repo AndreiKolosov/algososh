@@ -2,8 +2,8 @@ import { swap } from '../../utils';
 import { ElementStates } from '../../types/element-states';
 import { TStringChar } from '../../types/string.types';
 
-export const changeCirclesState = (arr: TStringChar[], indexes: number[], state: ElementStates): void =>
-  indexes.forEach((index) => (arr[index].state = state));
+export const changeCirclesState = (arr: TStringChar[], indices: number[], state: ElementStates): void =>
+  indices.forEach((index) => (arr[index].state = state));
 
 export const prepareReverseStep = (arr: string[]) => {
   return arr.map((value, index) => ({
