@@ -10,7 +10,7 @@ import { ElementStates } from '../../types/element-states';
 import { delay } from '../../utils';
 
 export const FibonacciPage: React.FC = () => {
-  const [number, setNumber] = useState<number>(1);
+  const [number, setNumber] = useState<number | null>(null);
   const [inProcess, setInProcess] = useState<boolean>(false);
   const [fibonacci, setFibonacci] = useState<number[]>([]);
   const maxValue = 19;
@@ -26,10 +26,10 @@ export const FibonacciPage: React.FC = () => {
 
   const checkValidity = () => {
     if (number) {
-      if (number <= 0 || number > 19) return true;
+      if (number <= 0 || number > 19 ) return true;
       return false;
     }
-    return false;
+    return true;
   };
 
   const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,8 +40,11 @@ export const FibonacciPage: React.FC = () => {
     e.preventDefault();
     setInProcess(true);
     setFibonacci([])
-    const arr = getFibonacciNumbers(number);
-    await renderFibonacci(arr);
+    if (number) {
+      const arr = getFibonacciNumbers(number);
+      setNumber(null)
+      await renderFibonacci(arr);
+    }
     setInProcess(false);
   };
 

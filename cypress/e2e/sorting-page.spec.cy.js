@@ -1,7 +1,7 @@
 describe('Sorting page test', () => {
-  it('Input should be clear', () => {
+  it('Input should be empty', () => {
     cy.visit('http://localhost:3000/algososh/recursion');
-    cy.get('input').clear();
+    cy.get('input').should('have.value', '');
   });
 
   it('Button should be disabled', () => {
