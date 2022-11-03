@@ -5,94 +5,88 @@ import { Circle } from '../ui/circle/circle';
 import { Input } from '../ui/input/input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
 import { ElementStates } from '../../types/element-states';
-import { delay, swap } from '../../utils';
-import { DELAY_IN_MS } from '../../constants/delays';
+import { delay} from '../../utils';
+import { SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { TStringChar } from '../../types/string.types';
-import { setCircleState } from './helpers';
+import { getReversingStringSteps, prepareReverseStep, changeCirclesState } from './utils';
 
 export const StringComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
-  const [stringChars, setStringChars] = useState<TStringChar[]>([]);
   const [reversedString, setReversedString] = useState<JSX.Element[]>([]);
   const [inProcess, setInProcess] = useState<boolean>(false);
   const stringInputLimit = 11;
 
-  const renderString = () =>
-    stringChars &&
-    setReversedString(
-      stringChars.map((char, index) => (
-        <li key={index}>
-          <Circle letter={char.value} state={char.state} />
-        </li>
-      )),
-    );
-
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    setStringChars(
-      e.target.value.split('').map((value, index) => ({
-        value,
-        index,
-        state: ElementStates.Default,
-      })),
-    );
   };
 
-  const reverseString = async (array: TStringChar[]) => {
-    const arr = array;
-    let start = 0;
-    let end = arr.length - 1;
-    while (start < end) {
-      await delay(DELAY_IN_MS);
-      setCircleState(arr, [start, end], ElementStates.Changing);
-      setStringChars(arr);
-      renderString();
-      await delay(DELAY_IN_MS);
-      swap<TStringChar>(arr, start, end);
-      setCircleState(arr, [start, end], ElementStates.Modified);
-      setStringChars(arr);
-      renderString();
-      start++;
-      end--;
-    }
-    if (start === end) {
-      await delay(DELAY_IN_MS);
-      setCircleState(arr, [start], ElementStates.Changing);
-      setStringChars(arr);
-      renderString();
-      await delay(DELAY_IN_MS);
-      setCircleState(arr, [start], ElementStates.Modified);
-      setStringChars(arr);
-      renderString();
-    }
-  };
+  const renderString = (chars: TStringChar[]) => {
+    setReversedString(
+      chars.map((char, index) => (
+      <li key={index}>
+        <Circle letter={char.value} state={char.state} />
+      </li>
+    ))
+    )
+  }
 
+  const reverseString = async () => {
+    const steps = getReversingStringSteps(inputValue);
+    const modifiedIndices: number[] = [];
+    let changingIndices: number[] = [];
+    let currentStep = prepareReverseStep(steps[0]);
+    renderString(currentStep);
+    if (steps?.length === 1) {
+      await delay(SHORT_DELAY_IN_MS);
+      changeCirclesState(currentStep, [0], ElementStates.Modified);
+      renderString(currentStep);
+    } else {
+      let start = 0;
+      const end = steps.length - 1;
+      let firstInd = 0;
+      let lastInd = steps[0].length - 1;
+      while (start < end) {
+        currentStep = prepareReverseStep(steps[start]);
+        if (start > 0) {
+          await delay(SHORT_DELAY_IN_MS);
+          changeCirclesState(currentStep, modifiedIndices, ElementStates.Modified);
+          renderString(currentStep);
+        }
+        changingIndices = [firstInd, lastInd];
+        await delay(SHORT_DELAY_IN_MS);
+        changeCirclesState(currentStep, changingIndices, ElementStates.Changing);
+        renderString(currentStep);
+        modifiedIndices.push(firstInd, lastInd);
+        start++;
+        firstInd++;
+        lastInd--;
+      }
+      await delay(SHORT_DELAY_IN_MS);
+      currentStep = prepareReverseStep(steps[end]);
+      changeCirclesState(currentStep, modifiedIndices, ElementStates.Modified);
+      renderString(currentStep);
+      await delay(SHORT_DELAY_IN_MS);
+      modifiedIndices.push(end)
+      changeCirclesState(currentStep, modifiedIndices, ElementStates.Modified);
+      renderString(currentStep);
+    }
+
+    }
+  
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setInProcess(true);
     setInputValue('');
-    renderString();
-
-    if (stringChars?.length === 1) {
-      await delay(DELAY_IN_MS);
-      setCircleState(stringChars, [0], ElementStates.Changing);
-      setStringChars(stringChars);
-      renderString();
-      await delay(DELAY_IN_MS);
-      setCircleState(stringChars, [0], ElementStates.Modified);
-      setStringChars(stringChars);
-      renderString();
-    }
-    if (stringChars && stringChars?.length > 1) reverseString(stringChars);
-
+    setReversedString([])
+    await reverseString()
     setInProcess(false);
   };
-
+  
   return (
-    <SolutionLayout title="Строка">
+    <SolutionLayout title='Строка'>
       <form className={styles.form} onSubmit={submitHandler}>
         <Input onChange={changeHandler} value={inputValue} isLimitText maxLength={stringInputLimit} />
-        <Button type="submit" text="Развернуть" isLoader={inProcess} disabled={!inputValue || inProcess}/>
+        <Button type='submit' text='Развернуть' isLoader={inProcess} disabled={!inputValue || inProcess} />
       </form>
       <ul className={styles.list}>
         {reversedString}
