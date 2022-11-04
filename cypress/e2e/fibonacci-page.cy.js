@@ -2,7 +2,7 @@ import { SHORT_DELAY_IN_MS } from '../../src/constants/delays';
 
 describe('Fibonacci page test', () => {
   it('Input should be empty', () => {
-    cy.visit('http://localhost:3000/algososh/fibonacci');
+    cy.visit('/fibonacci');
     cy.get('input').should('have.value', '');
   });
 

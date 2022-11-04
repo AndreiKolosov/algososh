@@ -1,6 +1,6 @@
 describe('Stack page test', () => {
   it('Input should be empty', () => {
-    cy.visit('http://localhost:3000/algososh/stack');
+    cy.visit('/stack');
     cy.get('input').should('have.value', '');
   })
 

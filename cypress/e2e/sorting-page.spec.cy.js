@@ -1,6 +1,6 @@
 describe('Sorting page test', () => {
   it('Input should be empty', () => {
-    cy.visit('http://localhost:3000/algososh/recursion');
+    cy.visit('/recursion');
     cy.get('input').should('have.value', '');
   });
 
@@ -17,18 +17,18 @@ describe('Sorting page test', () => {
       .each((el, index) => {
         cy.wrap(el).contains(index + 1);
         if (index === 0 || index === 2) {
-          cy.wrap(el).find('[class*=circle_changing]');
+          cy.wrap(el).find('div[class*=circle_changing]');
         }
         if (index === 1) {
-          cy.wrap(el).find('[class*=circle_default]');
+          cy.wrap(el).find('div[class*=circle_default]');
         }
       });
 
-    cy.get('[class*=circle_content]')
+    cy.get('div[class*=circle_content]')
       .should('have.length', 3)
       .each((el, index) => {
         cy.wrap(el).contains(3 - index);
-        cy.wrap(el).find('[class*=modified]');
+        cy.wrap(el).find('div[class*=modified]');
       });
   });
 });

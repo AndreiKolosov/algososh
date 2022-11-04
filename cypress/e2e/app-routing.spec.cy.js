@@ -1,7 +1,7 @@
 describe('App routing test', () => {
 
   it('App is running', () => {
-    cy.visit('http://localhost:3000/algososh');
+    cy.visit('/');
     cy.get('h1').should('have.text', 'МБОУ АЛГОСОШ');
     cy.get('a').should('have.length', 6)
   });
