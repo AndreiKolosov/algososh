@@ -5,9 +5,9 @@ describe('Stack page test', () => {
   })
 
   it('Buttons should be disabled', () => {
-    cy.get('button').eq(1).should('be.disabled');
-    cy.get('button').eq(2).should('be.disabled');
-    cy.get('button').eq(3).should('be.disabled');
+    cy.get('button[class*=text]').each((el) => {
+      cy.wrap(el).should('be.disabled');
+    });
   });
 
   it('Input value length cant be longer then 4', () => {
@@ -51,9 +51,9 @@ describe('Stack page test', () => {
     cy.get('div[class*=circle_circle]').should('have.length', 4);
     cy.get('button').eq(3).click();
     cy.get('div[class*=circle_circle]').should('have.length', 0);
-    cy.get('button').eq(1).should('be.disabled');
-    cy.get('button').eq(2).should('be.disabled');
-    cy.get('button').eq(3).should('be.disabled');
+    cy.get('button[class*=text]').each((el) => {
+      cy.wrap(el).should('be.disabled');
+    });
   });
 
 });

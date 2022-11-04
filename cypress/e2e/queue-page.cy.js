@@ -6,9 +6,9 @@ describe('Queue page test', () => {
   });
 
   it('Buttons should be disabled', () => {
-    cy.get('button').eq(1).should('be.disabled');
-    cy.get('button').eq(2).should('be.disabled');
-    cy.get('button').eq(3).should('be.disabled');
+    cy.get('button[class*=text]').each((el) => {
+      cy.wrap(el).should('be.disabled');
+    });
   });
 
   it('There should be 6 empty circles on the screen', () => {
@@ -107,9 +107,9 @@ describe('Queue page test', () => {
     
     cy.get('div[class*=circle_default]').should('have.length', 6);
     cy.get('input').should('not.be.disabled').should('have.value', '');
-    cy.get('button').eq(1).should('be.disabled');
-    cy.get('button').eq(2).should('be.disabled');
-    cy.get('button').eq(3).should('be.disabled');
+    cy.get('button[class*=text]').each((el) => {
+      cy.wrap(el).should('be.disabled')
+    })
   });
 
 });

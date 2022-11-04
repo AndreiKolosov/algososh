@@ -9,6 +9,7 @@ import { ElementStates } from '../../types/element-states';
 import { delay, swap } from '../../utils';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { createArray } from './utils';
+import { Direction } from '../../types/direction';
 
 export const SortingPage: React.FC = () => {
   const [array, setArray] = useState<TArrayElement[]>([]);
@@ -103,19 +104,19 @@ export const SortingPage: React.FC = () => {
   useEffect(() => setArray(createArray(minLength, maxLength)), []);
 
   return (
-    <SolutionLayout title="Сортировка массива">
+    <SolutionLayout title='Сортировка массива'>
       <div className={styles.controls}>
         <RadioInput
-          label="Выбор"
-          name="sortMethod"
+          label='Выбор'
+          name='sortMethod'
           value={SortMethods.SelectionSort}
           checked={sortMethod === SortMethods.SelectionSort}
           disabled={inProcess}
           onChange={radioChangeHandler}
         />
         <RadioInput
-          label="Пузырек"
-          name="sortMethod"
+          label='Пузырек'
+          name='sortMethod'
           value={SortMethods.BubbleSort}
           checked={sortMethod === SortMethods.BubbleSort}
           disabled={inProcess}
@@ -124,20 +125,22 @@ export const SortingPage: React.FC = () => {
         <div className={styles.controls__directionControls}>
           <Button
             extraClass={styles.controls__directionControlBtn}
-            text="По возрастанию"
+            text='По возрастанию'
             onClick={startAscendingSort}
             isLoader={inProcess && sortDirection === SortDirection.Ascending}
             disabled={inProcess && sortDirection !== SortDirection.Ascending}
+            sorting={Direction.Ascending}
           />
           <Button
             extraClass={styles.controls__directionControlBtn}
-            text="По убыванию"
+            text='По убыванию'
             onClick={startDescendingSort}
             isLoader={inProcess && sortDirection === SortDirection.Descending}
             disabled={inProcess && sortDirection !== SortDirection.Descending}
+            sorting={Direction.Descending}
           />
         </div>
-        <Button text="Новый массив" onClick={createNewArr} disabled={inProcess} />
+        <Button text='Новый массив' onClick={createNewArr} disabled={inProcess} />
       </div>
       <ul className={styles.list}>
         {array.map((el, i) => (
