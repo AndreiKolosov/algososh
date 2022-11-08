@@ -15,7 +15,7 @@ export const FibonacciPage: React.FC = () => {
   const [fibonacci, setFibonacci] = useState<number[]>([]);
   const maxValue = 19;
   const minValue = 1;
-
+  
   const renderFibonacci = async (arr: number[]) => {
     const { length } = arr;
     for (let i = 0; i < length; i++) {
